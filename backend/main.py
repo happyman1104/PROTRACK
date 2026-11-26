@@ -13,9 +13,13 @@ app = FastAPI(
     version="1.0.0"
 )
 
+# CORS khusus environment lokal (Next.js dev server)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -25,6 +29,7 @@ app.include_router(users.router)
 app.include_router(orders.router)
 app.include_router(shipments.router)
 app.include_router(auth_router.router)
+
 
 @app.get("/")
 def read_root():

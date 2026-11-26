@@ -1,9 +1,12 @@
 import os
+from pathlib import Path
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from dotenv import load_dotenv
 
-# Memuat file .env
+# Memuat file .env dari root proyek (maupun folder kerja saat ini)
+ROOT_ENV = Path(__file__).resolve().parent.parent / ".env"
+load_dotenv(ROOT_ENV)
 load_dotenv()
 
 # Mengambil data dari .env
@@ -24,6 +27,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Base class untuk membuat model (Tabel)
 Base = declarative_base()
+
 
 # Dependency untuk mendapatkan koneksi database di setiap request
 def get_db():
